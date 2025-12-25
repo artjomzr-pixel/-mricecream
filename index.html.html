@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr.Ice Cream - Натуральное мороженое премиум качества</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in-left.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in-right.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .scale-in.animated {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 6px 40px rgba(255, 107, 157, 0.2);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 3rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b9d;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 8rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            animation: scroll 20s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .order-btn {
+            background: white;
+            color: #764ba2;
+            padding: 1.2rem 4rem;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(118, 75, 162, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .order-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        /* Menu Section */
+        .menu {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #ffffff 0%, #fef9f8 100%);
+        }
+
+        .menu h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .menu-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .menu-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .menu-category {
+            background: white;
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #f0f0f0;
+        }
+
+        .menu-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.2);
+        }
+
+        .menu-icon {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-category h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #ff6b9d;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-size: 1.05rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .item-dots {
+            display: none;
+        }
+
+        .item-price {
+            display: none;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #ffffff 0%, #fef9f8 100%);
+        }
+
+        .gallery h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .gallery-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .gallery-item {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.3), rgba(192, 108, 132, 0.3));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-item:nth-child(1) { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .gallery-item:nth-child(2) { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
+        .gallery-item:nth-child(3) { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
+        .gallery-item:nth-child(4) { background: linear-gradient(135deg, #fdcbf1 0%, #e6dee9 100%); }
+        .gallery-item:nth-child(5) { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .gallery-item:nth-child(6) { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); }
+
+        .gallery-item:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .about-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #555;
+        }
+
+        .about-text p:first-child::first-letter {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #ff6b9d;
+            float: left;
+            line-height: 1;
+            margin-right: 10px;
+        }
+
+        .about-image {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            height: 500px;
+            transition: transform 0.4s;
+            position: relative;
+            background: #f5f5f5;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .about-image:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 4rem;
+            font-weight: 900;
+        }
+
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-icon img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        /* News Section */
+        .news {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, #fef9f8 0%, #ffffff 100%);
+        }
+
+        .news h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .news-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .news-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .news-item {
+            background: white;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            transform: scaleY(0);
+            transition: transform 0.4s;
+        }
+
+        .news-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .news-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.2);
+        }
+
+        .news-date {
+            color: #ff6b9d;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .news-item h3 {
+            margin-bottom: 1.5rem;
+            color: #333;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .news-item p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .contact-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #ffffff 0%, #fef9f8 100%);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: #ff6b9d;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+
+        .contact-info h3:first-child {
+            margin-top: 0;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            font-size: 1.15rem;
+            color: #555;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .map-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 25px;
+            height: 100%;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder::before {
+            content: '📍';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 968px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid,
+            .news-grid,
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery h2,
+            .about h2,
+            .news h2,
+            .contact h2,
+            .features h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <div class="logo">
+                <span class="logo-text">Mr.Ice Cream</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#menu">Меню</a></li>
+                <li><a href="#gallery">Вкусы</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#news">Новости</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Добро пожаловать в Mr.Ice Cream!</h1>
+            <p>Натуральное мороженое премиум качества, сделанное с любовью</p>
+            <a href="https://wolt.com" target="_blank" class="order-btn">🛵 Заказать через Wolt</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Почему выбирают нас</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🥛</span>
+                <h3>100% натуральные ингредиенты</h3>
+                <p>Только свежие сливки, фрукты и орехи. Никаких искусственных добавок и консервантов</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">👨‍🍳</span>
+                <h3>Ручное производство</h3>
+                <p>Каждая порция готовится вручную по традиционным семейным рецептам</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🚚</span>
+                <h3>Быстрая доставка</h3>
+                <p>Доставим свежее мороженое прямо к вашей двери за 30 минут через Wolt</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="menu" class="menu">
+        <h2 class="animate-on-scroll">Наше меню 2026</h2>
+        <p class="menu-subtitle animate-on-scroll">Свежие вкусы по доступным ценам</p>
+        <div class="menu-grid">
+            <div class="menu-category scale-in">
+                <div class="menu-icon">🍨</div>
+                <h3>JÄÄTIS</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">1 шарик</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">2,80€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">2 шарика</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">4,00€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">3 шарика</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">5,00€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Banaan split</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">6,50€</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category scale-in">
+                <div class="menu-icon">🥤</div>
+                <h3>KOKTELLID</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Vanilla milkshake</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">4,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Oreo milkshake</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">5,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Strawberry milkshake</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">4,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Chocolate milkshake</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">4,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Caramel milkshake</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">5,50€</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category scale-in">
+                <div class="menu-icon">🥤</div>
+                <h3>JOOGID</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Vesi ja gaseeritud</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">2,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Coca-Cola</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">2,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Fanta</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">2,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Sprite</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">2,50€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Cuppy (апельсин, мультивитамин, яблоко)</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">2,50€</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-category scale-in">
+                <div class="menu-icon">🧋</div>
+                <h3>BOBA TEE</h3>
+                <div class="menu-items">
+                    <div class="menu-item">
+                        <span class="item-name">Taro Bubble Tea</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">6,00€</span>
+                    </div>
+                    <div class="menu-item">
+                        <span class="item-name">Classic Bubble Tea</span>
+                        <span class="item-dots"></span>
+                        <span class="item-price">5,50€</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <h2 class="animate-on-scroll">Наши вкусы</h2>
+        <p class="gallery-subtitle animate-on-scroll">Каждый вкус - это маленькое произведение искусства</p>
+        <div class="gallery-grid">
+            <div class="gallery-item scale-in">
+                🍑 Персиковый рай<br><small>(замените на свое фото)</small>
+            </div>
+            <div class="gallery-item scale-in">
+                🍓 Клубничный сорбет<br><small>(замените на свое фото)</small>
+            </div>
+            <div class="gallery-item scale-in">
+                🍫 Шоколадная мечта<br><small>(замените на свое фото)</small>
+            </div>
+            <div class="gallery-item scale-in">
+                🥥 Кокосовый бриз<br><small>(замените на свое фото)</small>
+            </div>
+            <div class="gallery-item scale-in">
+                🌿 Мятный свежесть<br><small>(замените на свое фото)</small>
+            </div>
+            <div class="gallery-item scale-in">
+                🍋 Лимонный чизкейк<br><small>(замените на свое фото)</small>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <h2 class="animate-on-scroll">История нашей компании</h2>
+        <p class="about-subtitle animate-on-scroll">От маленького ларька до любимого бренда</p>
+        <div class="about-content">
+            <div class="about-text fade-in-left">
+                <p>Mr.Ice Cream начал свою историю с маленького ларька, где мы готовили мороженое по семейным рецептам. Наша страсть к качественным ингредиентам и уникальным вкусам превратила небольшой бизнес в любимое место для всех ценителей настоящего мороженого.</p>
+                <p>Мы используем только натуральные ингредиенты: свежие сливки, фрукты и орехи. Каждая порция готовится с любовью и заботой о наших клиентах. Наши мастера проходят специальное обучение, чтобы создавать идеальную текстуру и неповторимый вкус.</p>
+                <p>Сегодня Mrer Ice Cream - это не просто мороженое, это целая философия вкуса, которая объединяет людей и создает счастливые моменты. Мы гордимся тем, что приносим радость в каждый дом!</p>
+            </div>
+            <div class="about-image fade-in-right">
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2rem; text-align: center; color: #666;">
+                    <span style="font-size: 4rem; margin-bottom: 1rem;">❄️</span>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: #ff6b9d;">Упс...ещё зима</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.6;">Но мы уже готовим всё к сезону.<br>Скоро здесь появится фото!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="news">
+        <h2>Новости</h2>
+        <p class="news-subtitle">Следите за нашими обновлениями и специальными предложениями</p>
+        <div class="news-grid">
+            <div class="news-item">
+                <div class="news-date">24 декабря 2025</div>
+                <h3>🎄 Новогодние вкусы!</h3>
+                <p>Встречайте сезонные вкусы мороженого: имбирный пряник, клюквенный сорбет и шоколадная елка. Только до конца января!</p>
+            </div>
+            <div class="news-item">
+                <div class="news-date">15 декабря 2025</div>
+                <h3>💝 Скидка 20% на доставку</h3>
+                <p>Закажите мороженое через Wolt и получите скидку 20% на доставку. Промокод: MRER2025. Спешите, предложение ограничено!</p>
+            </div>
+            <div class="news-item">
+                <div class="news-date">1 декабря 2025</div>
+                <h3>📱 Мы в Instagram!</h3>
+                <p>Подписывайтесь на наш Instagram, чтобы первыми узнавать о новых вкусах и акциях. Каждую неделю розыгрыши призов!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Контакты</h2>
+        <p class="contact-subtitle">Мы всегда рады вас видеть!</p>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>📍 Наш адрес</h3>
+                <p>Jõesuu tee 8, Tallinn, Estonia, 11911</p>
+                
+                <h3>📞 Телефон</h3>
+                <p>+372 1234 5678</p>
+                
+                <h3>🕐 Время работы</h3>
+                <p>Понедельник - Воскресенье: 10:00 - 22:00<br>Без выходных!</p>
+                
+                <h3>💬 Социальные сети</h3>
+                <div class="social-links">
+                    <a href="#" class="social-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 8px;">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        Instagram
+                    </a>
+                    <a href="#" class="social-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 8px;">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        Facebook
+                    </a>
+                    <a href="#" class="social-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 8px;">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                        </svg>
+                        TikTok
+                    </a>
+                </div>
+            </div>
+            <div class="map-placeholder">
+                <div style="text-align: center; position: relative; z-index: 2;">
+                    <h3 style="font-size: 2rem; margin-bottom: 1.5rem;">📍 Jõesuu tee 8, Tallinn</h3>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Нажмите кнопку, чтобы открыть карту</p>
+                    <a href="https://www.google.com/maps/place/J%C3%B5esuu+tee+8,+11911+Tallinn/@59.4690496,24.8296161,610m/data=!3m1!1e3!4m5!3m4!1s0x469292d5f10ca559:0x1b9952c801c2bb27!8m2!3d59.4685064!4d24.8292869" 
+                       target="_blank" 
+                       style="background: white; color: #764ba2; padding: 1.2rem 3rem; font-size: 1.2rem; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s;">
+                        🗺️ Открыть в Google Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Mrer Ice Cream. Все права защищены.</p>
+        <p>Сделано с 💖 для любителей мороженого</p>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animation classes
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll, .fade-in-left, .fade-in-right, .scale-in');
+            
+            animatedElements.forEach((el, index) => {
+                // Add stagger delay for gallery items and features
+                if (el.classList.contains('scale-in') || el.classList.contains('feature-card') || el.classList.contains('news-item')) {
+                    el.style.transitionDelay = (index % 6) * 0.1 + 's';
+                }
+                observer.observe(el);
+            });
+        });
+    </script>
+                
